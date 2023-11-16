@@ -2,6 +2,7 @@ from sort import FrequentSort, Sort_Func
 from prefix_filtering import NormalPrefixFiltering, Prefix_Filtering_Func
 from similarity_measurement import Similarity_Measurement, OverlapMeasurement
 from dataloader.d02_loader import d02_loader
+from dataloader.d09_loader import d09_loader
 from inverted_index import InvertedIndexFunc
 
 
@@ -17,9 +18,7 @@ def PrefixFilteringMethod(
     [sorted_x, sorted_y] = sortFunc([x, y])
 
     # prefix filtering each sentence in dataset
-    filtered_x, filtered_y = prefixFilteringFunc(sorted_x), prefixFilteringFunc(
-        sorted_y
-    )
+    filtered_x, filtered_y = prefixFilteringFunc(sorted_x), prefixFilteringFunc(sorted_y)
 
     # build inverted_index_table with filtered_y
     invertedIndex = invertedIndexFunc(filtered_y)  # type: dict[str, list[int]]
@@ -46,9 +45,9 @@ def PrefixFilteringMethod(
 if __name__ == "__main__":
     filterFunc = NormalPrefixFiltering()
     sortFunc = FrequentSort()
-    measureFunc = OverlapMeasurement(20)
+    measureFunc = OverlapMeasurement(8)
     invertedIndexFunc = InvertedIndexFunc()
-    data_x, data_y, gt = d02_loader()
+    data_x, data_y, gt = d09_loader()
     y_hat = PrefixFilteringMethod(
         data_x, data_y, measureFunc, filterFunc, invertedIndexFunc, sortFunc
     )
