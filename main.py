@@ -1,10 +1,11 @@
 from sort import FrequentSort, Sort_Func
 from prefix_filtering import NormalPrefixFiltering, Prefix_Filtering_Func
 from similarity_measurement import Similarity_Measurement, OverlapMeasurement
+from dataloader.d01_loader import d01_loader
 from dataloader.d02_loader import d02_loader
 from dataloader.d09_loader import d09_loader
 from inverted_index import InvertedIndexFunc
-
+from evaluate import evaluate
 
 def PrefixFilteringMethod(
     x: list[list[str]],
@@ -41,6 +42,20 @@ def PrefixFilteringMethod(
 
     return result
 
+# Test for D01
+# if __name__ == "__main__":
+#     filterFunc = NormalPrefixFiltering()
+#     sortFunc = FrequentSort()
+#     measureFunc = OverlapMeasurement(4)
+#     invertedIndexFunc = InvertedIndexFunc()
+#     data_x, data_y, gt = d01_loader()
+#     print(data_x[:5], data_y[:5])
+#     y_hat = PrefixFilteringMethod(
+#         data_x, data_y, measureFunc, filterFunc, invertedIndexFunc, sortFunc
+#     )
+#     top, fop, tog = evaluate(y_hat, gt)
+#     print("Percentage of true predictions over all predictions: {}\nPercentage of false predictions over all prediction: {}\nPercentage of true predictions over ground truth: {}".format(top, fop, tog))
+
 
 if __name__ == "__main__":
     filterFunc = NormalPrefixFiltering()
@@ -52,3 +67,5 @@ if __name__ == "__main__":
         data_x, data_y, measureFunc, filterFunc, invertedIndexFunc, sortFunc
     )
     print(y_hat)
+    top, fop, tog = evaluate(y_hat, gt)
+    print("Percentage of true predictions over all predictions: {}\nPercentage of false predictions over all prediction: {}\nPercentage of true predictions over ground truth: {}".format(top, fop, tog))
