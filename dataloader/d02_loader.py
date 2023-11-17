@@ -30,11 +30,14 @@ def d02_loader() -> Tuple[list[list[str]], list[list[str]], list[Tuple[int, int]
             csv_reader = csv.DictReader(csvfile, delimiter='|')
             # Read each row in the CSV file
             for row in csv_reader:
-                line = row["name"] + " " + row["description"] + " " + row["price"]
-                line = line.replace("/ "," ")
-                line = line.replace("(", "")
-                line = line.replace(")", "")
-                token_list = line.split(" ")
+                token_list = []
+                for col in [row["name"], row["description"], row["price"]]:
+                    c = col.replace("/ "," ")
+                    c = c.replace("(", "")
+                    c = c.replace(")", "")
+                    c = c.split(" ")
+                    c = [item for item in c if item != ""]
+                    token_list += c
                 set.append(token_list)
         ans.append(set)
 
